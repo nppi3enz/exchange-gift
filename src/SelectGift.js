@@ -1,28 +1,20 @@
 import React, { useState, useEffect } from "react";
 import PreviewGift from "./PreviewGift";
 import VideoGift from "./VideoGift";
-import DataGifts from "./DataGifts";
+import useGift from "./hooks/useGift";
 
-let timerId;
 function SelectGift() {
-  const [scene, setScene] = useState("main");
-  const [gift, setGift] = useState({});
-  let currentGift = [];
+  const { gift, scene, randomGift, setScene } = useGift();
+
+  let timerId;
   const clickRandom = () => {
-    const length = currentGift.length;
-    const randomIndex = Math.floor(Math.random() * length);
-    console.log(`random ${randomIndex}`);
-    setGift(currentGift[randomIndex]);
+    randomGift();
     setScene("video");
     timerId = setInterval(() => {
       setScene("preview");
       clearInterval(timerId);
     }, 6500);
   };
-  console.log(gift);
-  useEffect(() => {
-    currentGift = [...DataGifts];
-  });
   return (
     <div>
       {scene === "main" && (

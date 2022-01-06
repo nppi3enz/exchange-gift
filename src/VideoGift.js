@@ -12,6 +12,7 @@ function VideoGift(props) {
         loop={true}
         width="100%"
         height="100%"
+        muted={true}
         controls={true}
       />
     </div>

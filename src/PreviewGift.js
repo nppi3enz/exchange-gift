@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
+import useGift from "./hooks/useGift";
 
 const BG = styled.div`
   background: #000;
@@ -148,6 +149,7 @@ const Button = styled.button`
   border: 1px solid #000;
   border-radius: 10px;
   padding: 5px 10px;
+  font-family: "Kanit", sans-serif;
   &.white {
     border: 1px solid #fff;
   }
@@ -166,58 +168,55 @@ const Gift = styled.img`
   animation-duration: 0.5s;
   animation-timing-function: ease;
 `;
-class PreviewGift extends React.Component {
-  state = {
-    status: false,
+const PreviewGift = (props) => {
+  const { setScene, removeGift } = useGift();
+  const [status, setStatus] = useState(false);
+  const openGift = () => {
+    removeGift();
+    setStatus(true);
   };
-  open = () => {
-    this.setState({
-      status: true,
-    });
+  const clickToHome = () => {
+    setScene("main");
   };
-  render() {
-    return (
-      <div>
-        <BG>
-          <Description className={this.state.status ? "slideDown" : ""}>
-            <div style={{ fontSize: "2em" }}>
-              คุณได้รับของขวัญจาก ... {this.props.sender}
-            </div>
-            <div style={{ paddingBottom: "10px" }}>
-              {this.props.description}
-            </div>
-            <div>
-              <Button>สุ่มใหม่</Button>{" "}
-              <Button onClick={this.open}>เปิดกล่อง</Button>
-            </div>
-          </Description>
-          <Title className={this.state.status ? "block open-title" : "hidden"}>
-            {this.props.name}
-          </Title>
-          <Items>
-            <Gift
-              src={
-                !this.state.status
-                  ? `/images/gifts/${this.props.shadowImage}`
-                  : `/images/gifts/${this.props.image}`
-              }
-            />
-          </Items>
-          <Right className={this.state.status ? "open-right" : ""}>
-            <div className={this.state.status ? "block" : "hidden"}>
-              <Message>{this.props.wish}</Message>
-              <Sender>จาก {this.props.sender}</Sender>
-            </div>
-          </Right>
-          <div className={this.state.status ? "block" : "hidden"}>
-            <Button className="white" onClick={this.open}>
-              กลับไปหน้าแรก
-            </Button>
+  return (
+    <div>
+      <BG>
+        <Description className={status ? "slideDown" : ""}>
+          <div style={{ fontSize: "2em" }}>
+            คุณได้รับของขวัญจาก ... {props.sender}
           </div>
-        </BG>
-      </div>
-    );
-  }
-}
+          <div style={{ paddingBottom: "10px" }}>{props.description}</div>
+          <div>
+            <Button onClick={clickToHome}>สุ่มใหม่</Button>{" "}
+            <Button onClick={openGift}>เปิดกล่อง</Button>
+          </div>
+        </Description>
+        <Title className={status ? "block open-title" : "hidden"}>
+          {props.name}
+        </Title>
+        <Items>
+          <Gift
+            src={
+              !status
+                ? `/images/gifts/${props.shadowImage}`
+                : `/images/gifts/${props.image}`
+            }
+          />
+        </Items>
+        <Right className={status ? "open-right" : ""}>
+          <div className={status ? "block" : "hidden"}>
+            <Message>{props.wish}</Message>
+            <Sender>จาก {props.sender}</Sender>
+          </div>
+        </Right>
+        <div className={status ? "block" : "hidden"}>
+          <Button className="white" onClick={clickToHome}>
+            กลับไปหน้าแรก
+          </Button>
+        </div>
+      </BG>
+    </div>
+  );
+};
 
 export default PreviewGift;
