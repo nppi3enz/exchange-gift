@@ -5,11 +5,9 @@ function VideoGift(props) {
   return (
     <div>
       <ReactPlayer
-        url={
-          props.type === "special"
-            ? "/videos/5starwish.mp4"
-            : "/videos/4starwish.mp4"
-        }
+        url={`/videos/${
+          props.type === "normal" ? "3starwish" : props.type
+        }.mp4`}
         playing={true}
         loop={true}
         width="100%"

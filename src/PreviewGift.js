@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 const BG = styled.div`
@@ -9,6 +9,17 @@ const BG = styled.div`
   width: 100vw;
   height: 100vh;
   position: relative;
+  overflow: hidden;
+`;
+const openTitle = keyframes`
+  0% {
+    left: 100px;
+    opacity: 0;
+  }
+  100% {
+    left: 40px;
+    opacity: 1;
+  }
 `;
 const Title = styled.div`
   position: absolute;
@@ -20,6 +31,14 @@ const Title = styled.div`
   font-family: "Kanit", sans-serif;
   text-shadow: 3px 3px 3px #000;
   text-align: left;
+  animation-delay: 1s;
+  opacity: 0;
+  &.open-title {
+    animation-name: ${openTitle};
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+  }
 `;
 const Items = styled.div`
   margin-top: 10px;
@@ -46,6 +65,16 @@ const Sender = styled.div`
   text-align: right;
   margin-top: 20px;
 `;
+const openRight = keyframes`
+  0% {
+    right: 100px;
+    opacity: 0;
+  }
+  100% {
+    right: 20px;
+    opacity: 1;
+  }
+`;
 const Right = styled.div`
   position: absolute;
   width: 550px;
@@ -56,6 +85,14 @@ const Right = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  animation-delay: 1s;
+  opacity: 0;
+  &.open-right {
+    animation-name: ${openRight};
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+  }
 `;
 const Message = styled.div`
   margin-top: 30px;
@@ -70,6 +107,14 @@ const slideUp = keyframes`
   }
   100% {
     bottom: 0%;
+  }
+`;
+const slideDown = keyframes`
+  0% {
+    bottom: 0%;
+  }
+  100% {
+    bottom: -100%;
   }
 `;
 const Description = styled.div`
@@ -92,12 +137,20 @@ const Description = styled.div`
   animation-timing-function: ease;
   animation-delay: 1s;
   animation-fill-mode: forwards;
+  &.slideDown {
+    animation-delay: 0s;
+    bottom: 0%;
+    animation-name: ${slideDown} !important;
+  }
 `;
 const Button = styled.button`
   display: inline-block;
   border: 1px solid #000;
   border-radius: 10px;
   padding: 5px 10px;
+  &.white {
+    border: 1px solid #fff;
+  }
 `;
 const zoomOut = keyframes`
   0% {
@@ -114,11 +167,19 @@ const Gift = styled.img`
   animation-timing-function: ease;
 `;
 class PreviewGift extends React.Component {
+  state = {
+    status: false,
+  };
+  open = () => {
+    this.setState({
+      status: true,
+    });
+  };
   render() {
     return (
       <div>
         <BG>
-          <Description>
+          <Description className={this.state.status ? "slideDown" : ""}>
             <div style={{ fontSize: "2em" }}>
               คุณได้รับของขวัญจาก ... {this.props.sender}
             </div>
@@ -126,17 +187,33 @@ class PreviewGift extends React.Component {
               {this.props.description}
             </div>
             <div>
-              <Button>สุ่มใหม่</Button> <Button>เปิดกล่อง</Button>
+              <Button>สุ่มใหม่</Button>{" "}
+              <Button onClick={this.open}>เปิดกล่อง</Button>
             </div>
           </Description>
-          <Title>{this.props.name}</Title>
+          <Title className={this.state.status ? "block open-title" : "hidden"}>
+            {this.props.name}
+          </Title>
           <Items>
-            <Gift src={`/images/gifts/${this.props.shadowImage}`} />
+            <Gift
+              src={
+                !this.state.status
+                  ? `/images/gifts/${this.props.shadowImage}`
+                  : `/images/gifts/${this.props.image}`
+              }
+            />
           </Items>
-          <Right>
-            <Message>{this.props.wish}</Message>
-            <Sender>จาก {this.props.sender}</Sender>
+          <Right className={this.state.status ? "open-right" : ""}>
+            <div className={this.state.status ? "block" : "hidden"}>
+              <Message>{this.props.wish}</Message>
+              <Sender>จาก {this.props.sender}</Sender>
+            </div>
           </Right>
+          <div className={this.state.status ? "block" : "hidden"}>
+            <Button className="white" onClick={this.open}>
+              กลับไปหน้าแรก
+            </Button>
+          </div>
         </BG>
       </div>
     );

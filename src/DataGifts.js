@@ -1,7 +1,7 @@
 const DataGifts = [
   {
-    sender: "Toonkung",
-    type: "special",
+    sender: "Special Gift No.1",
+    type: "5starwish",
     description: "Special Gift No.1",
     name: "True Money มูลค่า 300 บาท",
     wish: "ยินดีด้วย~ คุณคือผู้โชคดีได้รับของขวัญสุดพิเศษ Jackpot ไปจ้า",
@@ -9,8 +9,8 @@ const DataGifts = [
     image: "gift001.png",
   },
   {
-    sender: "Toonkung",
-    type: "special",
+    sender: "Special Gift No.2",
+    type: "4starwish",
     description: "Special Gift No.2",
     name: "บัตร Steam Wallet มูลค่า 150 บาท",
     wish: "ยินดีด้วย~ คุณคือผู้โชคดีได้รับของขวัญสุดพิเศษจากเราไปจ้า",
@@ -18,8 +18,8 @@ const DataGifts = [
     image: "gift001.png",
   },
   {
-    sender: "Cattis",
-    type: "special",
+    sender: "Special Gift No.3",
+    type: "4starwish",
     description: "Special Gift No.3",
     name: "Code Game : xxxxx",
     wish: "คุณคือผู้โชคดีได้รับของขวัญสุดพิเศษจากพี่ทีไปจ้า",
@@ -27,8 +27,8 @@ const DataGifts = [
     image: "gift001.png",
   },
   {
-    sender: "Cattis",
-    type: "special",
+    sender: "Special Gift No.4",
+    type: "4starwish",
     description: "Special Gift No.4",
     name: "Code Game : xxxxx",
     wish: "คุณคือผู้โชคดีได้รับของขวัญสุดพิเศษจากพี่ทีไปจ้า",
@@ -36,8 +36,8 @@ const DataGifts = [
     image: "gift001.png",
   },
   {
-    sender: "Cattis",
-    type: "special",
+    sender: "Special Gift No.5",
+    type: "4starwish",
     description: "Special Gift No.5",
     name: "True Money มูลค่า 100 บาท",
     wish: "คุณคือผู้โชคดีได้รับของขวัญสุดพิเศษจากพี่ทีไปจ้า",
